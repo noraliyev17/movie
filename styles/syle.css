@@ -1,0 +1,26 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+.container{
+    min-width: 1510px !important;
+}
+.wrapper{
+    display: grid;
+    grid-template-columns: repeat(Auto-fill, minmax(320px, 1fr  ));
+    gap: 10px;
+}
+.col-md-3{
+    border-radius: 20px 20px 0 0;
+}
+.col{
+    border-radius: 20px 20px 0 0;
+}
+p{
+    font-family: 'Irish Grover';
+font-style: normal;
+font-weight: 400;
+}
