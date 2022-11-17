@@ -14,20 +14,33 @@
     <title>All Movies App</title>
   </head>
   <body class="bg-dark">
-    <header class="header bg-danger">
+
+
+    
+
+
+    <header class="header bg-danger ">
       <div class="container">
         <nav class="nav p-3 bg-danger">
           <h3 class="nav__logo text-white navbar_title">Movies</h3>
+           <!-- <a href="#" class="link text-dark nav-link:hover ">Menu</a> -->
         </nav>
       </div>
     </header>
+
+
+
+
+
+
+
 
     <main class="main">
       <section>
         <div class="container">
           <div class="row">
             <div class="col-md-3 p-3 bg-dark m-2">
-              <form action="#">
+              <form action="#" id="submitForm">
                 <label for="filmname" class="w-100 my-2 fs-5">
                   <p class="text-white">Enter film name</p>
                   <input
@@ -57,11 +70,20 @@
                  </option>
                 </select>
 
-                <button class="btn btn-danger w-75 p-3" type="submit">
+                <button class="btn btn-danger w-100 p-3" type="submit">
                   SEARCH
                 </button>
               </form>
+
+
+              <div class="card d-none card-res w-100 shadow bg-danger my-3 p-3">
+                 <h4 class="text-light" id="res"> </h4>
+              </div>
+
+
+
             </div>
+
             <div class="col-md-7 p-3 bg-dark m-2">
               <!-- card -->
 
@@ -71,7 +93,7 @@
               <!-- card end -->
             </div>
 
-            <div class="col p-3 bg-dark m-2"></div>
+            <div class="col p-3 bg-lig m-2"></div>
           </div>
         </div>
       </section>
