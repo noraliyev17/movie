@@ -1,6 +1,6 @@
 "use strict";
 
-movies.splice(500);
+movies.splice(50);
 
 //  console.log(movies);
 //    {
@@ -55,13 +55,13 @@ class="card-img"
   <li><strong> Rating: ${el.rating}</strong></li>
   <li><strong> Category: ${el.category}</strong></li>
   <li><strong> Runtime: ${el.time}</strong></li>
-  <li><strong> ID: ${el.ID}</strong></li>
+ 
 </ul>
 
 <div class="social d-flex">
   <a href="${el.link}" target="_blank" class="btn  btn-danger m-2">You-Tube</a>
-  <button class="btn btn-primary m-2">Read More</button>
-  <button class="btn btn-warning m-2">Add Bookmark</button>
+  <button class="btn btn-primary m-2" data-read="${el.ID}">Read More </button>
+  <button class="btn btn-warning m-2" data-add="${el.ID}">Add Bookmark</button>
 </div>
 </div>
 `
@@ -71,61 +71,45 @@ class="card-img"
 }
 renderAllMovies();
 
-
-
-
-
 //  catygories***********************************************************
 
-const dynamicCategory=()=>{
+const dynamicCategory = () => {
+  let category = [];
 
-  let category=[];
+  AllMovies.forEach((e) => {
+    e.category.forEach((el) => {
+      if (!category.includes(el)) {
+        category.push(el);
+      }
+    });
+  });
 
+  category.sort();
+  category.unshift("All");
+  category.forEach((el) => {
+    const option = createElement("option", "item-option", el);
+    $("#category").appendChild(option);
+  });
+};
 
-
-AllMovies.forEach((e)=>{
-  e.category.forEach((el)=>{
-    
-    if(!category.includes(el)){
-
-      category.push(el)
-
-    }
-  })
-})
-
-category.sort()
-category.unshift('All')
-category.forEach((el)=>{
-  const option=createElement('option', 'item-option', el);
-  $('#category').appendChild(option)
-})
-
-}
-
-
-dynamicCategory()
+dynamicCategory();
 //  catygories***********************************************************
-
-
-
-
-
-
 
 // search film and rating********************************************************************
 
-const findFilm = (regexp , rating=0, category) => {
-  
-
-  if(category==='All'){
+const findFilm = (regexp, rating = 0, category) => {
+  if (category === "All") {
     return AllMovies.filter((film) => {
-      return film.title.match(regexp) && film.rating>=rating
-    })
+      return film.title.match(regexp) && film.rating >= rating;
+    });
   }
 
   return AllMovies.filter((film) => {
-    return film.title.match(regexp) && film.rating>=rating && film.category.includes(category)
+    return (
+      film.title.match(regexp) &&
+      film.rating >= rating &&
+      film.category.includes(category)
+    );
   });
 };
 
@@ -134,51 +118,39 @@ const findFilm = (regexp , rating=0, category) => {
 // // search film listener rating********************************************************************
 
 $("#submitForm").addEventListener("submit", () => {
-
-  $('.wrapper').innerHTML=`<span class="loader orta_load"></span>`;
+  $(".wrapper").innerHTML = `<span class="loader orta_load"></span>`;
 
   const searchValue = $("#filmname").value;
-  const filmRating=$('#ratingname').value;
-  const filmCategory =$('#category').value;
-
-
+  const filmRating = $("#ratingname").value;
+  const filmCategory = $("#category").value;
 
   const regexp = new RegExp(searchValue, "gi");
 
   const searchResult = findFilm(regexp, filmRating, filmCategory);
-  
 
+  setTimeout(() => {
+    if (searchResult.length > 0) {
+      searchResultRunder(searchResult);
 
+      $(".card-res").classList.remove("d-none");
 
+      $(
+        "#res"
+      ).innerHTML = `<strong >${searchResult.length}</strong> ta film topildi !`;
 
-setTimeout(()=>{
-  if(searchResult.length>0){
-  
-    searchResultRunder(searchResult)
- 
-    $('.card-res').classList.remove('d-none');
- 
-    
-  
-    $('#res').innerHTML=`<strong >${searchResult.length}</strong> ta film topildi !`;
+      // if(searchValue.length===0){
 
-    // if(searchValue.length===0){
+      //   $('.card-res').classList.add('d-none');
 
-    //   $('.card-res').classList.add('d-none');
-
-    // }
-
-}else{
-
-      $('.card-res').classList.add('d-none');
-  $('.wrapper').innerHTML = '<p class="malumottop text-center">Bunday film topilmadi !</p>'
-}
-
-},2000)
-
+      // }
+    } else {
+      $(".card-res").classList.add("d-none");
+      $(".wrapper").innerHTML =
+        '<p class="malumottop text-center w-100">Bunday film topilmadi !</p>';
+    }
+  }, 2000);
 });
 
- 
 function searchResultRunder(data = []) {
   $(".wrapper").innerHTML = "";
   data.forEach((el) => {
@@ -199,40 +171,84 @@ class="card-img"
 <li><strong> Rating: ${el.rating}</strong></li>
 <li><strong> Category: ${el.category}</strong></li>
 <li><strong> Runtime: ${el.time}</strong></li>
-  <li><strong> ID: ${el.ID}</strong></li>
+
   </ul>
   
   <div class="social d-flex">
   <a href="${el.link}" target="_blank" class="btn  btn-danger m-2">You-Tube</a>
-  <button class="btn btn-primary m-2">Read More</button>
-  <button class="btn btn-warning m-2">Add Bookmark</button>
+  <button class="btn btn-primary m-2" data-read="${el.ID}">Read More</button>
+  <button class="btn btn-warning m-2" data-add="${el.ID}">Add Bookmark</button>
   </div>
 </div>
 `
-);
+    );
     $(".wrapper").appendChild(card);
   });
 }
 
-  // // search film listener rating********************************************************************
+// // search film listener rating********************************************************************
 
+// read maore******************************************************************************************************
 
+$(".wrapper").addEventListener("click", (e) => {
+  if (e.target.classList.contains("btn-primary")) {
+    console.log(e.target);
+    const idMovie = e.target.getAttribute("data-read");
+    showModal(idMovie);
+    $(".modal-window").classList.remove("modal-hide");
+  }
+});
 
+function showModal(id) {
+  const filmitem = AllMovies.filter((e) => {
+    return e.ID == id;
+  }); 
 
+  filmitem.forEach((el) => {
+    const row = createElement('div','row',`
+  <div class="col-md-4 d-flex">
+  <img src="${el.minIMG}"   alt="cover" class=" rounded img-fluid">
+   <div class="col-md-6 ">
+    <h4 class="text-warning modal-title mb-4">${el.title}</h4>
+    <ul class="list-group ms-5 list-unstyled">
+      <li class="list-item text-info  mt-4">Year: ${el.year}</li>
+      <li class="list-item text-info  mt-4">Runtime: ${el.time}</li>
+      <li class="list-item text-info  mt-4">Rating: ${el.rating}</li>
+      <li class="list-item text-info  mt-4">Category: ${el.category}</li>
+    </ul>
+   </div>
+</div>
+<h4 class="text-warning mt-3">${el.title}</h4>
+<p class="text-info   w-50" >${el.summary}</p>
 
-  // read maore******************************************************************************************************
-
-
-
-
+  </div>
   
+  
+  
+  `);
+
+    $('.modal-content').appendChild(row);
+  });
+
+}
+
+
+$("#close").addEventListener("click", () => {
+  $(".modal-window").classList.add("modal-hide");
+  $(".modal-content").innerHTML = "";
+});
 
 
 
 
 
+window.addEventListener('click', (e)=>{
+
+  if(e.target.classList.contains('modal-window')){
+    $('.modal-container').classList.togle('animate');
+  }
+})
 
 
-  // read maore******************************************************************************************************
 
-
+// read maore******************************************************************************************************

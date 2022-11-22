@@ -20,9 +20,10 @@
     border-radius: 20px 20px 0 0;
 }
 p{
-    font-family: 'Irish Grover';
+    /* font-family: 'Irish Grover'; */
 font-style: normal;
 font-weight: 400;
+width: 300px;
 }
 input{
     caret-color: red;
@@ -79,3 +80,64 @@ font-weight: 400;
     top: 290px;
     left: 210px;
   }
+
+
+
+
+
+  /* modal */
+
+  .modal-window{
+    width: 100% !important;
+    min-height: 100% !important;
+    background-color: #2125297e;
+    backdrop-filter: blur(7px);
+    position: fixed;
+    top: 0;
+    z-index: 17;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+  }
+  .modal-window .modal-container{
+    width: 65%;
+    height: 700px;
+    background-color: #dc3545;
+    border-radius:10px;
+    box-shadow:0 0 10px 0px #828282;
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  .btnx{
+    right: 0px;
+  }
+  .modal-hide{
+    transform: translateY(-200%);
+  }
+  .modal-title{
+    margin-left: 90px;
+  }
+  #close{
+    z-index: 18;
+  }
+ .animate{
+animation-name: shake;
+animation-duration: 1s;
+animation-timing-function:ease-in ;
+animation-iteration-count: infinite;
+animation-iteration-count:1;
+animation-fill-mode:forwards;
+animation-direction: alternate;
+ }
+ 
+ @keyframes shake{
+  0% { transform: scale(1) translateX(0); }
+
+  25% { transform: scale(0.95) translateX(-10); }
+
+  50% { transform: scale(1) translateX(10); }
+ 
+  75% { transform: scale(0.95) translateX(-10) }
+
+  100% { transform: scale(1) translateX(0); }
+}
