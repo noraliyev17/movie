@@ -1,6 +1,6 @@
 "use strict";
 
-movies.splice(100);
+movies.splice(500);
 
 //  console.log(movies);
 //    {
@@ -59,7 +59,7 @@ class="card-img"
 </ul>
 
 <div class="social d-flex">
-  <button class="btn btn-danger m-2">You-Tube</button>
+  <a href="${el.link}" target="_blank" class="btn  btn-danger m-2">You-Tube</a>
   <button class="btn btn-primary m-2">Read More</button>
   <button class="btn btn-warning m-2">Add Bookmark</button>
 </div>
@@ -71,33 +71,81 @@ class="card-img"
 }
 renderAllMovies();
 
-// search film********************************************************************
 
-const findFilm = (regexp , rating) => {
+
+
+
+//  catygories***********************************************************
+
+const dynamicCategory=()=>{
+
+  let category=[];
+
+
+
+AllMovies.forEach((e)=>{
+  e.category.forEach((el)=>{
+    
+    if(!category.includes(el)){
+
+      category.push(el)
+
+    }
+  })
+})
+
+category.sort()
+category.unshift('All')
+category.forEach((el)=>{
+  const option=createElement('option', 'item-option', el);
+  $('#category').appendChild(option)
+})
+
+}
+
+
+dynamicCategory()
+//  catygories***********************************************************
+
+
+
+
+
+
+
+// search film and rating********************************************************************
+
+const findFilm = (regexp , rating=0, category) => {
   
+
+  if(category==='All'){
+    return AllMovies.filter((film) => {
+      return film.title.match(regexp) && film.rating>=rating
+    })
+  }
+
   return AllMovies.filter((film) => {
-    return film.title.match(regexp) && film.rating>=rating;
+    return film.title.match(regexp) && film.rating>=rating && film.category.includes(category)
   });
 };
 
-// // search film********************************************************************
+// // search film rating********************************************************************
 
-// // search film listener********************************************************************
+// // search film listener rating********************************************************************
 
 $("#submitForm").addEventListener("submit", () => {
 
   $('.wrapper').innerHTML=`<span class="loader orta_load"></span>`;
 
   const searchValue = $("#filmname").value;
-
-
   const filmRating=$('#ratingname').value;
+  const filmCategory =$('#category').value;
 
 
 
   const regexp = new RegExp(searchValue, "gi");
 
-  const searchResult = findFilm(regexp, filmRating);
+  const searchResult = findFilm(regexp, filmRating, filmCategory);
   
 
 
@@ -114,11 +162,11 @@ setTimeout(()=>{
   
     $('#res').innerHTML=`<strong >${searchResult.length}</strong> ta film topildi !`;
 
-    if(searchValue.length===0){
+    // if(searchValue.length===0){
 
-      $('.card-res').classList.add('d-none');
+    //   $('.card-res').classList.add('d-none');
 
-    }
+    // }
 
 }else{
 
@@ -127,18 +175,10 @@ setTimeout(()=>{
 }
 
 },2000)
-  // searchResultRunder(searchResult);
+
 });
 
-// // search film listener********************************************************************
-
-
-
-
-
-
-
-
+ 
 function searchResultRunder(data = []) {
   $(".wrapper").innerHTML = "";
   data.forEach((el) => {
@@ -146,30 +186,53 @@ function searchResultRunder(data = []) {
       "div",
       "card shadow",
       `
-<img
-src="${el.minIMG}"
+      <img
+      src="${el.minIMG}"
 alt="movies"
 class="card-img"
 />
 <div class="card-body">
 <h4 class="card-title">${el.title}</h4>
 <ul class="list-unstyled">
-  <li><strong> Year:   ${el.year} </strong></li>
-  <li><strong> language: ${el.lang}</strong></li>
-  <li><strong> Rating: ${el.rating}</strong></li>
-  <li><strong> Category: ${el.category}</strong></li>
-  <li><strong> Runtime: ${el.time}</strong></li>
+<li><strong> Year:   ${el.year} </strong></li>
+<li><strong> language: ${el.lang}</strong></li>
+<li><strong> Rating: ${el.rating}</strong></li>
+<li><strong> Category: ${el.category}</strong></li>
+<li><strong> Runtime: ${el.time}</strong></li>
   <li><strong> ID: ${el.ID}</strong></li>
-</ul>
-
-<div class="social d-flex">
-  <button class="btn btn-danger m-2">You-Tube</button>
+  </ul>
+  
+  <div class="social d-flex">
+  <a href="${el.link}" target="_blank" class="btn  btn-danger m-2">You-Tube</a>
   <button class="btn btn-primary m-2">Read More</button>
   <button class="btn btn-warning m-2">Add Bookmark</button>
-</div>
+  </div>
 </div>
 `
-    );
+);
     $(".wrapper").appendChild(card);
   });
 }
+
+  // // search film listener rating********************************************************************
+
+
+
+
+
+  // read maore******************************************************************************************************
+
+
+
+
+  
+
+
+
+
+
+
+
+  // read maore******************************************************************************************************
+
+
