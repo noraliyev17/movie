@@ -186,69 +186,72 @@ class="card-img"
   });
 }
 
-// // search film listener rating********************************************************************
+// // search film listener rating end********************************************************************
 
 // read maore******************************************************************************************************
 
 $(".wrapper").addEventListener("click", (e) => {
   if (e.target.classList.contains("btn-primary")) {
-    console.log(e.target);
-    const idMovie = e.target.getAttribute("data-read");
-    showModal(idMovie);
-    $(".modal-window").classList.remove("modal-hide");
+     const idMovie = e.target.getAttribute("data-read");
+     showModal(idMovie);
+     $('.modal-window').classList.remove('modal-hide');
   }
 });
 
 function showModal(id) {
-  const filmitem = AllMovies.filter((e) => {
-    return e.ID == id;
-  }); 
 
-  filmitem.forEach((el) => {
-    const row = createElement('div','row',`
-  <div class="col-md-4 d-flex">
-  <img src="${el.minIMG}"   alt="cover" class=" rounded img-fluid">
-   <div class="col-md-6 ">
-    <h4 class="text-warning modal-title mb-4">${el.title}</h4>
-    <ul class="list-group ms-5 list-unstyled">
-      <li class="list-item text-info  mt-4">Year: ${el.year}</li>
-      <li class="list-item text-info  mt-4">Runtime: ${el.time}</li>
-      <li class="list-item text-info  mt-4">Rating: ${el.rating}</li>
-      <li class="list-item text-info  mt-4">Category: ${el.category}</li>
-    </ul>
-   </div>
-</div>
-<h4 class="text-warning mt-3">${el.title}</h4>
-<p class="text-info   w-50" >${el.summary}</p>
-
-  </div>
-  
-  
-  
-  `);
-
-    $('.modal-content').appendChild(row);
+  const filmItem = AllMovies.filter((e) => {
+     return e.ID == id;
   });
 
+
+  filmItem.forEach((e) => {
+
+     const row = createElement('div', 'row', `
+  
+     <div class="col-md-4">
+                  <img src="${e.minIMG}" alt="cover" class="img-fluid rounded">
+               </div>
+               <div class="col-md-6">
+                  <h4 class="text-primary w-50 ">${e.title}</h4>
+                  <ul class="list-group ">
+                     <li class="list-group-item">Rating : ${e.rating} </li>
+                     <li class="list-group-item">Year: ${e.year}</li>
+                     <li class="list-group-item">Runtime: ${e.time} </li>
+                     <li class="list-group-item">Category:${e.category}  </li>
+                  </ul>
+               </div>
+               <div class="col-md-12 mt-4">
+                  <h4 class="text-danger">
+                    ${e.title}
+                  </h4>
+                  <p class="w-50">
+                  ${e.summary}
+                  </p>
+                
+   </div>
+
+`);
+
+     $('.modal-content').appendChild(row);
+  })
 }
+$('#close').addEventListener('click', () => {
+  console.log("ok");
+  $('.modal-window').classList.add('modal-hide');
+  $('.modal-content').innerHTML = "";
+  console.log("ok");
+})
 
+window.addEventListener('click', (e) => {
 
-$("#close").addEventListener("click", () => {
-  $(".modal-window").classList.add("modal-hide");
-  $(".modal-content").innerHTML = "";
-});
-
-
-
-
-
-window.addEventListener('click', (e)=>{
-
-  if(e.target.classList.contains('modal-window')){
-    $('.modal-container').classList.togle('animate');
+  if (e.target.classList.contains('modal-window')) {
+     $('#close').classList.toggle('animate')
+  
   }
+
 })
 
 
 
-// read maore******************************************************************************************************
+// read maore end******************************************************************************************************

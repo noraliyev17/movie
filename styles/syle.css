@@ -103,7 +103,7 @@ font-weight: 400;
   .modal-window .modal-container{
     width: 65%;
     height: 700px;
-    background-color: #dc3545;
+    background-color: #ffffff;
     border-radius:10px;
     box-shadow:0 0 10px 0px #828282;
     transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -114,30 +114,42 @@ font-weight: 400;
   .modal-hide{
     transform: translateY(-200%);
   }
-  .modal-title{
-    margin-left: 90px;
-  }
+
   #close{
     z-index: 18;
   }
- .animate{
-animation-name: shake;
-animation-duration: 1s;
-animation-timing-function:ease-in ;
-animation-iteration-count: infinite;
-animation-iteration-count:1;
-animation-fill-mode:forwards;
-animation-direction: alternate;
- }
- 
- @keyframes shake{
-  0% { transform: scale(1) translateX(0); }
-
-  25% { transform: scale(0.95) translateX(-10); }
-
-  50% { transform: scale(1) translateX(10); }
- 
-  75% { transform: scale(0.95) translateX(-10) }
-
-  100% { transform: scale(1) translateX(0); }
+  .animate {
+    animation-name: animateModal;
+    animation-duration: 1s;
+    animation-timing-function: ease-in;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-direction: alternate;
+  }
+  
+  @keyframes animateModal {
+    0% {
+      transform: scale(1) translateX(0);
+    }
+  
+    25% {
+      transform: scale(0.95) translateX(-10px);
+    }
+  
+    50% {
+      transform: scale(1) translateX(10px);
+    }
+  
+    75% {
+      transform: scale(0.95) translateX(-10px);
+    }
+  
+    100% {
+      transform: scale(1) translateX(0);
+    }
+  }
+  
+.list-group{
+  width: 60% !important;
+  margin-top: 30px;
 }
